@@ -63,7 +63,7 @@ def date_from_string(value: str) -> Optional[date]:
                 # Gestisce i casi in cui il timestamp non è convertibile in una data valida
                 return None
         else:
-            raise errors.DataError(f"Value must be formatted like '/Date(...)/', found '{value}'")
+            return None
     else:
         return None
 
