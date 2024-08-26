@@ -2,13 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name = "docuware-client",
-    version = "0.4.1",
+    version = "0.4.2",
     description = "DocuWare REST-API client",
     long_description = open("README.md").read(),
     long_description_content_type = "text/markdown",
-    url = "https://github.com/sniner/docuware-client",
-    author = "Stefan Schönberger",
-    author_email = "mail@sniner.dev",
+    url = "https://github.com/sonicitconsulting/docuware-client.git",
+    author = "Saul Imbrici",
+    author_email = "info@sonicitconsulting.it",
     install_requires=[
         "requests>=2.27",
     ],
