@@ -49,17 +49,21 @@ def date_from_string(value: str) -> Optional[date]:
     """
     if value:
         if m := DATE_PATTERN.match(str(value)):
-            msec = int(m[1])
-            if msec > 0:
-                unix_timestamp = msec / 1000
-                try:
-                    dt = date.fromtimestamp(unix_timestamp)
-                except:
-                    dt = None
-                return dt
-            else:
+            msec = int(m[1])  # Estrai il valore del timestamp in millisecondi
+            unix_timestamp = msec / 1000  # Converti in secondi
+            
+            try:
+                # Gestisce i timestamp negativi (date prima del 1970)
+                if msec < 0:
+                    dt = datetime(1970, 1, 1) + timedelta(seconds=unix_timestamp)
+                else:
+                    dt = datetime.fromtimestamp(unix_timestamp)
+                return dt.date()
+            except (OverflowError, OSError, ValueError):
+                # Gestisce i casi in cui il timestamp non è convertibile in una data valida
                 return None
-        raise errors.DataError(f"Value must be formatted like '/Date(...)/', found '{value}'")
+        else:
+            raise errors.DataError(f"Value must be formatted like '/Date(...)/', found '{value}'")
     else:
         return None
 
