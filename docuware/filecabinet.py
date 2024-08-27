@@ -168,5 +168,56 @@ class FileCabinet(types.FileCabinetP):
             return False
         return result
 
+    def put_stamp(self, stamp_id, file_cabinet_id, document_id, page_number):
+        """
+
+        """
+
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+
+        body = {
+            {
+                "Annotations": [
+                    {
+                        "PageNumber": page_number,
+                        "SectionNumber": 0,
+                        "AnnotationsPlacement": {
+                            "Items": [
+                                {
+                                    "$type": "StampPlacement",
+                                    "StampId": f"{stamp_id}",
+                                    "Layer": 5,
+                                    "Field": [
+                                        {
+                                            "Name": "<#1>",
+                                            "TypedValue": {
+                                                "Item": "*Test007*",
+                                                "ItemElementName": "string"
+                                            },
+                                            "Value": "*Test007*",
+                                            "TextAsString": "*Test007*"
+                                        }
+                                    ],
+                                    "Password": None
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+
+        try:
+            result = self.client.conn.put(f"{self.endpoints['filecabinets']}/{file_cabinet_id}"
+                                          f"/Documents/{document_id}/Annotation", headers=headers, json=body)
+        except Exception as e:
+            log.debug(f'Error updating document data fields:\n\n{e}')
+            return False
+        return result
+
+
     def __str__(self):
         return f"{self.__class__.__name__} '{self.name}' [{self.id}]"
