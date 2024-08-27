@@ -179,7 +179,7 @@ class FileCabinet(types.FileCabinetP):
         }
 
         try:
-            result = self.client.conn.put(f"{self.endpoints['filecabinets']}/{file_cabinet_id}"
+            result = self.organization.client.conn.put(f"{self.endpoints['filecabinets']}/{file_cabinet_id}"
                                           f"/Documents/{document_id}/Annotation", headers=headers, json=annotation)
         except Exception as e:
             log.debug(f'Error updating document data fields:\n\n{e}')
