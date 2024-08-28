@@ -182,7 +182,7 @@ class FileCabinet(types.FileCabinetP):
             #result = self.organization.client.conn.put(f"{self.endpoints['filecabinets']}/{file_cabinet_id}/Documents/{document_id}/Annotation", headers=headers, json=annotation)
             result = self.organization.client.conn.post(f"{self.endpoints['documents']}/{document_id}/Annotation", headers=headers, json=annotation)
         except Exception as e:
-            log.debug(f'Error updating document data fields:\n\n{e}')
+            log.warning(f'Error in creating annotation:\n\n{e}')
             return False
         return result
 
